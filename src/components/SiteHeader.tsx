@@ -32,12 +32,12 @@ export function SiteHeader() {
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-0.5 xl:flex">
+        <nav className="hidden items-center gap-0.5 lg:flex">
           {nav.map((n) => (
             <Link
               key={n.to}
               to={n.to}
-              className="rounded-md px-2.5 py-2 text-sm font-medium text-foreground/80 transition hover:bg-secondary hover:text-foreground"
+              className="rounded-md px-2 py-2 text-[13px] font-medium text-foreground/80 transition hover:bg-secondary hover:text-foreground"
               activeProps={{ className: "bg-secondary text-primary" }}
               activeOptions={{ exact: n.to === "/" }}
             >
@@ -46,7 +46,7 @@ export function SiteHeader() {
           ))}
           <Link
             to="/login"
-            className="ml-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+            className="ml-2 rounded-md bg-primary px-3 py-2 text-[13px] font-semibold text-primary-foreground transition hover:opacity-90"
           >
             লগইন
           </Link>
@@ -54,7 +54,7 @@ export function SiteHeader() {
 
         <button
           onClick={() => setOpen((v) => !v)}
-          className="rounded-md p-2 text-foreground xl:hidden"
+          className="shrink-0 rounded-md p-2 text-foreground lg:hidden"
           aria-label="Menu"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -62,14 +62,14 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-border bg-background xl:hidden">
+        <div className="border-t border-border bg-background lg:hidden">
           <nav className="container-page flex flex-col py-3">
             {nav.map((n) => (
               <Link
                 key={n.to}
                 to={n.to}
                 onClick={() => setOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 hover:bg-secondary"
+                className="rounded-md px-3 py-2.5 text-sm font-medium text-foreground/80 hover:bg-secondary"
                 activeProps={{ className: "bg-secondary text-primary" }}
                 activeOptions={{ exact: n.to === "/" }}
               >
@@ -79,7 +79,7 @@ export function SiteHeader() {
             <Link
               to="/login"
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-md bg-primary px-3 py-2 text-center text-sm font-semibold text-primary-foreground"
+              className="mt-2 rounded-md bg-primary px-3 py-2.5 text-center text-sm font-semibold text-primary-foreground"
             >
               লগইন / রেজিস্ট্রেশন
             </Link>
