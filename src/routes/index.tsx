@@ -28,32 +28,32 @@ function Index() {
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0" style={{ background: "var(--gradient-hero)" }} />
-        <div className="container-page relative grid min-h-[78vh] items-center py-24 text-primary-foreground">
+        <div className="container-page relative grid min-h-[60vh] items-center py-16 text-primary-foreground sm:min-h-[72vh] sm:py-24">
           <div className="max-w-3xl animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-1 text-[11px] font-medium backdrop-blur sm:text-xs">
               <span className="h-2 w-2 rounded-full bg-brand-red" />
               প্রতিষ্ঠা ১৯৯৮ • রাজশাহী বিশ্ববিদ্যালয়
             </span>
-            <h1 className="mt-6 text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
+            <h1 className="mt-5 text-3xl font-bold leading-tight sm:text-5xl md:text-6xl">
               ঝিনাইদহ জেলা সমিতি
-              <span className="mt-2 block text-2xl font-medium text-white/85 sm:text-3xl">
+              <span className="mt-2 block text-lg font-medium text-white/85 sm:text-3xl">
                 একতাই আমাদের শক্তি, শিক্ষাই আমাদের আলো
               </span>
             </h1>
-            <p className="mt-6 max-w-2xl text-base text-white/85 sm:text-lg">
+            <p className="mt-5 max-w-2xl text-sm text-white/85 sm:text-lg">
               রাজশাহী বিশ্ববিদ্যালয়ে অধ্যয়নরত ঝিনাইদহ জেলার ৬টি উপজেলার শিক্ষার্থী ও
               প্রাক্তনদের অফিসিয়াল প্ল্যাটফর্ম।
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap gap-3 sm:mt-8">
               <Link
                 to="/members"
-                className="inline-flex items-center gap-2 rounded-lg bg-brand-red px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-lg bg-brand-red px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:opacity-90 sm:px-5 sm:py-3"
               >
                 সদস্য ডিরেক্টরি <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 to="/upazilas"
-                className="inline-flex items-center gap-2 rounded-lg border border-white/40 bg-white/10 px-5 py-3 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/20"
+                className="inline-flex items-center gap-2 rounded-lg border border-white/40 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/20 sm:px-5 sm:py-3"
               >
                 উপজেলা শাখা
               </Link>
@@ -63,12 +63,12 @@ function Index() {
       </section>
 
       {/* Stats dashboard */}
-      <section className="container-page relative z-10 -mt-14">
-        <div className="grid grid-cols-2 gap-4 rounded-2xl border border-border bg-card p-6 shadow-xl md:grid-cols-4">
+      <section className="container-page relative z-10 -mt-8 sm:-mt-14">
+        <div className="grid grid-cols-2 gap-3 rounded-2xl border border-border bg-card p-4 shadow-xl sm:gap-4 sm:p-6 md:grid-cols-4">
           {stats.map((s) => (
             <div key={s.label} className="text-center">
-              <div className="text-3xl font-bold text-gradient-brand md:text-4xl">{s.value}</div>
-              <div className="mt-1 text-sm text-muted-foreground">{s.label}</div>
+              <div className="text-2xl font-bold text-gradient-brand sm:text-3xl md:text-4xl">{s.value}</div>
+              <div className="mt-1 text-xs text-muted-foreground sm:text-sm">{s.label}</div>
             </div>
           ))}
         </div>
@@ -243,10 +243,10 @@ function Index() {
 
       {/* Gallery preview */}
       <section className="container-page py-20">
-        <div className="flex items-end justify-between">
-          <div>
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div className="min-w-0">
             <span className="text-sm font-semibold uppercase tracking-wider text-brand-red">গ্যালারি</span>
-            <h2 className="mt-2 text-3xl font-bold md:text-4xl">স্মৃতির পাতা থেকে</h2>
+            <h2 className="mt-2 text-2xl font-bold sm:text-3xl md:text-4xl">স্মৃতির পাতা থেকে</h2>
           </div>
           <Link to="/gallery" className="text-sm font-semibold text-primary hover:underline">
             পুরো গ্যালারি →

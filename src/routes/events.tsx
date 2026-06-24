@@ -25,12 +25,12 @@ function EventsPage() {
 
   return (
     <PageShell title="ইভেন্টসমূহ" subtitle="আসন্ন আয়োজন ও কর্মসূচি।">
-      <div className="mb-6 inline-flex rounded-lg border border-border bg-secondary p-1">
+      <div className="mb-6 -mx-1 flex gap-1 overflow-x-auto rounded-lg border border-border bg-secondary p-1 sm:mx-0 sm:inline-flex sm:overflow-visible">
         {TABS.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`rounded-md px-4 py-2 text-sm font-semibold transition ${
+            className={`shrink-0 whitespace-nowrap rounded-md px-3 py-2 text-xs font-semibold transition sm:px-4 sm:text-sm ${
               tab === t.key ? "bg-primary text-primary-foreground" : "text-foreground/70 hover:text-foreground"
             }`}
           >
