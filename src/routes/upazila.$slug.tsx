@@ -38,7 +38,7 @@ function UpazilaPage() {
 
       <Section title="উপজেলা কমিটি">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {upazila.committee.map((m) => (
+          {upazila.committee.map((m: { name: string; position: string }) => (
             <div key={m.name} className="card-elevated p-5 text-center">
               <div className="mx-auto grid h-16 w-16 place-items-center rounded-full gradient-banner text-xl font-bold text-white">
                 {m.name.charAt(0)}
