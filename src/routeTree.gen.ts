@@ -9,38 +9,195 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UpazilasRouteImport } from './routes/upazilas'
+import { Route as NoticesRouteImport } from './routes/notices'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as EventsRouteImport } from './routes/events'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CommitteeRouteImport } from './routes/committee'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as UpazilaSlugRouteImport } from './routes/upazila.$slug'
 
+const UpazilasRoute = UpazilasRouteImport.update({
+  id: '/upazilas',
+  path: '/upazilas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticesRoute = NoticesRouteImport.update({
+  id: '/notices',
+  path: '/notices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsRoute = EventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommitteeRoute = CommitteeRouteImport.update({
+  id: '/committee',
+  path: '/committee',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UpazilaSlugRoute = UpazilaSlugRouteImport.update({
+  id: '/upazila/$slug',
+  path: '/upazila/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/committee': typeof CommitteeRoute
+  '/contact': typeof ContactRoute
+  '/events': typeof EventsRoute
+  '/gallery': typeof GalleryRoute
+  '/login': typeof LoginRoute
+  '/notices': typeof NoticesRoute
+  '/upazilas': typeof UpazilasRoute
+  '/upazila/$slug': typeof UpazilaSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/committee': typeof CommitteeRoute
+  '/contact': typeof ContactRoute
+  '/events': typeof EventsRoute
+  '/gallery': typeof GalleryRoute
+  '/login': typeof LoginRoute
+  '/notices': typeof NoticesRoute
+  '/upazilas': typeof UpazilasRoute
+  '/upazila/$slug': typeof UpazilaSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/committee': typeof CommitteeRoute
+  '/contact': typeof ContactRoute
+  '/events': typeof EventsRoute
+  '/gallery': typeof GalleryRoute
+  '/login': typeof LoginRoute
+  '/notices': typeof NoticesRoute
+  '/upazilas': typeof UpazilasRoute
+  '/upazila/$slug': typeof UpazilaSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/committee'
+    | '/contact'
+    | '/events'
+    | '/gallery'
+    | '/login'
+    | '/notices'
+    | '/upazilas'
+    | '/upazila/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/committee'
+    | '/contact'
+    | '/events'
+    | '/gallery'
+    | '/login'
+    | '/notices'
+    | '/upazilas'
+    | '/upazila/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/committee'
+    | '/contact'
+    | '/events'
+    | '/gallery'
+    | '/login'
+    | '/notices'
+    | '/upazilas'
+    | '/upazila/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CommitteeRoute: typeof CommitteeRoute
+  ContactRoute: typeof ContactRoute
+  EventsRoute: typeof EventsRoute
+  GalleryRoute: typeof GalleryRoute
+  LoginRoute: typeof LoginRoute
+  NoticesRoute: typeof NoticesRoute
+  UpazilasRoute: typeof UpazilasRoute
+  UpazilaSlugRoute: typeof UpazilaSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/upazilas': {
+      id: '/upazilas'
+      path: '/upazilas'
+      fullPath: '/upazilas'
+      preLoaderRoute: typeof UpazilasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notices': {
+      id: '/notices'
+      path: '/notices'
+      fullPath: '/notices'
+      preLoaderRoute: typeof NoticesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/committee': {
+      id: '/committee'
+      path: '/committee'
+      fullPath: '/committee'
+      preLoaderRoute: typeof CommitteeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +205,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/upazila/$slug': {
+      id: '/upazila/$slug'
+      path: '/upazila/$slug'
+      fullPath: '/upazila/$slug'
+      preLoaderRoute: typeof UpazilaSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CommitteeRoute: CommitteeRoute,
+  ContactRoute: ContactRoute,
+  EventsRoute: EventsRoute,
+  GalleryRoute: GalleryRoute,
+  LoginRoute: LoginRoute,
+  NoticesRoute: NoticesRoute,
+  UpazilasRoute: UpazilasRoute,
+  UpazilaSlugRoute: UpazilaSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
