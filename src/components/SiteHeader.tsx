@@ -1,0 +1,89 @@
+import { Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import logo from "@/assets/logo.png";
+
+const nav = [
+  { to: "/", label: "হোম" },
+  { to: "/upazilas", label: "উপজেলা" },
+  { to: "/committee", label: "কমিটি" },
+  { to: "/events", label: "ইভেন্ট" },
+  { to: "/notices", label: "নোটিশ" },
+  { to: "/gallery", label: "গ্যালারি" },
+  { to: "/contact", label: "যোগাযোগ" },
+] as const;
+
+export function SiteHeader() {
+  const [open, setOpen] = useState(false);
+  return (
+    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur-md">
+      <div className="container-page flex h-16 items-center justify-between gap-4">
+        <Link to="/" className="flex min-w-0 items-center gap-3">
+          <img src={logo} alt="" width={40} height={40} className="h-10 w-10 shrink-0 rounded-full" />
+          <div className="min-w-0 leading-tight">
+            <div className="truncate text-sm font-bold text-foreground sm:text-base">
+              ঝিনাইদহ জেলা সমিতি
+            </div>
+            <div className="truncate text-[11px] text-muted-foreground sm:text-xs">
+              রাজশাহী বিশ্ববিদ্যালয়
+            </div>
+          </div>
+        </Link>
+
+        <nav className="hidden items-center gap-1 lg:flex">
+          {nav.map((n) => (
+            <Link
+              key={n.to}
+              to={n.to}
+              className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition hover:bg-secondary hover:text-foreground"
+              activeProps={{ className: "bg-secondary text-primary" }}
+              activeOptions={{ exact: n.to === "/" }}
+            >
+              {n.label}
+            </Link>
+          ))}
+          <Link
+            to="/login"
+            className="ml-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+          >
+            লগইন
+          </Link>
+        </nav>
+
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="rounded-md p-2 text-foreground lg:hidden"
+          aria-label="Menu"
+        >
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+      </div>
+
+      {open && (
+        <div className="border-t border-border bg-background lg:hidden">
+          <nav className="container-page flex flex-col py-3">
+            {nav.map((n) => (
+              <Link
+                key={n.to}
+                to={n.to}
+                onClick={() => setOpen(false)}
+                className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 hover:bg-secondary"
+                activeProps={{ className: "bg-secondary text-primary" }}
+                activeOptions={{ exact: n.to === "/" }}
+              >
+                {n.label}
+              </Link>
+            ))}
+            <Link
+              to="/login"
+              onClick={() => setOpen(false)}
+              className="mt-2 rounded-md bg-primary px-3 py-2 text-center text-sm font-semibold text-primary-foreground"
+            >
+              লগইন / রেজিস্ট্রেশন
+            </Link>
+          </nav>
+        </div>
+      )}
+    </header>
+  );
+}
