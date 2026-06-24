@@ -6,6 +6,8 @@ import logo from "@/assets/logo.png";
 const nav = [
   { to: "/", label: "হোম" },
   { to: "/upazilas", label: "উপজেলা" },
+  { to: "/members", label: "সদস্য" },
+  { to: "/alumni", label: "অ্যালামনাই" },
   { to: "/committee", label: "কমিটি" },
   { to: "/events", label: "ইভেন্ট" },
   { to: "/notices", label: "নোটিশ" },
@@ -30,12 +32,12 @@ export function SiteHeader() {
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-0.5 xl:flex">
           {nav.map((n) => (
             <Link
               key={n.to}
               to={n.to}
-              className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition hover:bg-secondary hover:text-foreground"
+              className="rounded-md px-2.5 py-2 text-sm font-medium text-foreground/80 transition hover:bg-secondary hover:text-foreground"
               activeProps={{ className: "bg-secondary text-primary" }}
               activeOptions={{ exact: n.to === "/" }}
             >
@@ -52,7 +54,7 @@ export function SiteHeader() {
 
         <button
           onClick={() => setOpen((v) => !v)}
-          className="rounded-md p-2 text-foreground lg:hidden"
+          className="rounded-md p-2 text-foreground xl:hidden"
           aria-label="Menu"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -60,7 +62,7 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-border bg-background lg:hidden">
+        <div className="border-t border-border bg-background xl:hidden">
           <nav className="container-page flex flex-col py-3">
             {nav.map((n) => (
               <Link

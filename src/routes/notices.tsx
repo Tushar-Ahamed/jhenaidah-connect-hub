@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { PageShell } from "@/components/PageShell";
 import { notices } from "@/lib/data";
 
@@ -12,14 +13,39 @@ export const Route = createFileRoute("/notices")({
   component: NoticesPage,
 });
 
+const TABS = [
+  { key: "all", label: "সব নোটিশ" },
+  { key: "district", label: "জেলা নোটিশ" },
+  { key: "upazila", label: "উপজেলা নোটিশ" },
+] as const;
+
 function NoticesPage() {
+  const [tab, setTab] = useState<(typeof TABS)[number]["key"]>("all");
+  const list = notices.filter((n) => tab === "all" || n.level === tab);
+
   return (
     <PageShell title="নোটিশ বোর্ড" subtitle="জেলা ও উপজেলা শাখার সকল নোটিশ এক জায়গায়।">
+      <div className="mb-6 inline-flex rounded-lg border border-border bg-secondary p-1">
+        {TABS.map((t) => (
+          <button
+            key={t.key}
+            onClick={() => setTab(t.key)}
+            className={`rounded-md px-4 py-2 text-sm font-semibold transition ${
+              tab === t.key ? "bg-primary text-primary-foreground" : "text-foreground/70 hover:text-foreground"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
       <div className="space-y-4">
-        {notices.map((n) => (
+        {list.map((n) => (
           <article key={n.id} className="card-elevated card-elevated-hover p-6">
             <div className="flex flex-wrap items-center gap-2 text-xs">
-              <span className="rounded-full bg-primary px-3 py-1 font-semibold text-primary-foreground">
+              <span className={`rounded-full px-3 py-1 font-semibold ${
+                n.level === "district" ? "bg-primary text-primary-foreground" : "bg-brand-red text-white"
+              }`}>
                 {n.scope}
               </span>
               <span className="text-muted-foreground">{n.date}</span>
