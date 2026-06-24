@@ -11,11 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UpazilasRouteImport } from './routes/upazilas'
 import { Route as NoticesRouteImport } from './routes/notices'
+import { Route as MembersRouteImport } from './routes/members'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CommitteeRouteImport } from './routes/committee'
+import { Route as AlumniRouteImport } from './routes/alumni'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UpazilaSlugRouteImport } from './routes/upazila.$slug'
 
@@ -27,6 +29,11 @@ const UpazilasRoute = UpazilasRouteImport.update({
 const NoticesRoute = NoticesRouteImport.update({
   id: '/notices',
   path: '/notices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MembersRoute = MembersRouteImport.update({
+  id: '/members',
+  path: '/members',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -54,6 +61,11 @@ const CommitteeRoute = CommitteeRouteImport.update({
   path: '/committee',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AlumniRoute = AlumniRouteImport.update({
+  id: '/alumni',
+  path: '/alumni',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -67,22 +79,26 @@ const UpazilaSlugRoute = UpazilaSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/alumni': typeof AlumniRoute
   '/committee': typeof CommitteeRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
   '/login': typeof LoginRoute
+  '/members': typeof MembersRoute
   '/notices': typeof NoticesRoute
   '/upazilas': typeof UpazilasRoute
   '/upazila/$slug': typeof UpazilaSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/alumni': typeof AlumniRoute
   '/committee': typeof CommitteeRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
   '/login': typeof LoginRoute
+  '/members': typeof MembersRoute
   '/notices': typeof NoticesRoute
   '/upazilas': typeof UpazilasRoute
   '/upazila/$slug': typeof UpazilaSlugRoute
@@ -90,11 +106,13 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/alumni': typeof AlumniRoute
   '/committee': typeof CommitteeRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
   '/login': typeof LoginRoute
+  '/members': typeof MembersRoute
   '/notices': typeof NoticesRoute
   '/upazilas': typeof UpazilasRoute
   '/upazila/$slug': typeof UpazilaSlugRoute
@@ -103,33 +121,39 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/alumni'
     | '/committee'
     | '/contact'
     | '/events'
     | '/gallery'
     | '/login'
+    | '/members'
     | '/notices'
     | '/upazilas'
     | '/upazila/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/alumni'
     | '/committee'
     | '/contact'
     | '/events'
     | '/gallery'
     | '/login'
+    | '/members'
     | '/notices'
     | '/upazilas'
     | '/upazila/$slug'
   id:
     | '__root__'
     | '/'
+    | '/alumni'
     | '/committee'
     | '/contact'
     | '/events'
     | '/gallery'
     | '/login'
+    | '/members'
     | '/notices'
     | '/upazilas'
     | '/upazila/$slug'
@@ -137,11 +161,13 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AlumniRoute: typeof AlumniRoute
   CommitteeRoute: typeof CommitteeRoute
   ContactRoute: typeof ContactRoute
   EventsRoute: typeof EventsRoute
   GalleryRoute: typeof GalleryRoute
   LoginRoute: typeof LoginRoute
+  MembersRoute: typeof MembersRoute
   NoticesRoute: typeof NoticesRoute
   UpazilasRoute: typeof UpazilasRoute
   UpazilaSlugRoute: typeof UpazilaSlugRoute
@@ -161,6 +187,13 @@ declare module '@tanstack/react-router' {
       path: '/notices'
       fullPath: '/notices'
       preLoaderRoute: typeof NoticesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/members': {
+      id: '/members'
+      path: '/members'
+      fullPath: '/members'
+      preLoaderRoute: typeof MembersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -198,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CommitteeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/alumni': {
+      id: '/alumni'
+      path: '/alumni'
+      fullPath: '/alumni'
+      preLoaderRoute: typeof AlumniRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -217,11 +257,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AlumniRoute: AlumniRoute,
   CommitteeRoute: CommitteeRoute,
   ContactRoute: ContactRoute,
   EventsRoute: EventsRoute,
   GalleryRoute: GalleryRoute,
   LoginRoute: LoginRoute,
+  MembersRoute: MembersRoute,
   NoticesRoute: NoticesRoute,
   UpazilasRoute: UpazilasRoute,
   UpazilaSlugRoute: UpazilaSlugRoute,
