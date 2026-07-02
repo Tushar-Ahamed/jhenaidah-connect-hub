@@ -14,16 +14,209 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      events: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string
+          event_date: string | null
+          id: string
+          level: Database["public"]["Enums"]["content_level"]
+          title: string
+          upazila: string | null
+          updated_at: string
+          venue: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          event_date?: string | null
+          id?: string
+          level?: Database["public"]["Enums"]["content_level"]
+          title: string
+          upazila?: string | null
+          updated_at?: string
+          venue?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          event_date?: string | null
+          id?: string
+          level?: Database["public"]["Enums"]["content_level"]
+          title?: string
+          upazila?: string | null
+          updated_at?: string
+          venue?: string | null
+        }
+        Relationships: []
+      }
+      gallery: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          image_url: string
+          title: string
+          upazila: string | null
+          uploaded_by: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+          image_url: string
+          title?: string
+          upazila?: string | null
+          uploaded_by?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          image_url?: string
+          title?: string
+          upazila?: string | null
+          uploaded_by?: string | null
+        }
+        Relationships: []
+      }
+      notices: {
+        Row: {
+          body: string
+          created_at: string
+          created_by: string | null
+          event_date: string | null
+          id: string
+          level: Database["public"]["Enums"]["content_level"]
+          title: string
+          upazila: string | null
+          updated_at: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          created_by?: string | null
+          event_date?: string | null
+          id?: string
+          level?: Database["public"]["Enums"]["content_level"]
+          title: string
+          upazila?: string | null
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          created_by?: string | null
+          event_date?: string | null
+          id?: string
+          level?: Database["public"]["Enums"]["content_level"]
+          title?: string
+          upazila?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          current_position: string | null
+          department: string | null
+          full_name: string
+          hall: string | null
+          id: string
+          is_alumni: boolean
+          phone: string | null
+          real_email: string | null
+          reg_no: string | null
+          roll_no: string | null
+          session: string | null
+          upazila: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          current_position?: string | null
+          department?: string | null
+          full_name?: string
+          hall?: string | null
+          id: string
+          is_alumni?: boolean
+          phone?: string | null
+          real_email?: string | null
+          reg_no?: string | null
+          roll_no?: string | null
+          session?: string | null
+          upazila?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          current_position?: string | null
+          department?: string | null
+          full_name?: string
+          hall?: string | null
+          id?: string
+          is_alumni?: boolean
+          phone?: string | null
+          real_email?: string | null
+          reg_no?: string | null
+          roll_no?: string | null
+          session?: string | null
+          upazila?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          upazila: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          upazila?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          upazila?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_upazila_admin_for: {
+        Args: { _upazila: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "district_admin" | "upazila_admin" | "member"
+      content_level: "district" | "upazila"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +343,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["district_admin", "upazila_admin", "member"],
+      content_level: ["district", "upazila"],
+    },
   },
 } as const
