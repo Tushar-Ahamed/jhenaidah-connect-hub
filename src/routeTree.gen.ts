@@ -17,9 +17,13 @@ import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CommitteeRouteImport } from './routes/committee'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AlumniRouteImport } from './routes/alumni'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UpazilaSlugRouteImport } from './routes/upazila.$slug'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 
 const UpazilasRoute = UpazilasRouteImport.update({
   id: '/upazilas',
@@ -61,9 +65,18 @@ const CommitteeRoute = CommitteeRouteImport.update({
   path: '/committee',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AlumniRoute = AlumniRouteImport.update({
   id: '/alumni',
   path: '/alumni',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -76,10 +89,21 @@ const UpazilaSlugRoute = UpazilaSlugRouteImport.update({
   path: '/upazila/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/alumni': typeof AlumniRoute
+  '/auth': typeof AuthRoute
   '/committee': typeof CommitteeRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
@@ -88,11 +112,14 @@ export interface FileRoutesByFullPath {
   '/members': typeof MembersRoute
   '/notices': typeof NoticesRoute
   '/upazilas': typeof UpazilasRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/upazila/$slug': typeof UpazilaSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/alumni': typeof AlumniRoute
+  '/auth': typeof AuthRoute
   '/committee': typeof CommitteeRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
@@ -101,12 +128,16 @@ export interface FileRoutesByTo {
   '/members': typeof MembersRoute
   '/notices': typeof NoticesRoute
   '/upazilas': typeof UpazilasRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/upazila/$slug': typeof UpazilaSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/alumni': typeof AlumniRoute
+  '/auth': typeof AuthRoute
   '/committee': typeof CommitteeRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
@@ -115,6 +146,8 @@ export interface FileRoutesById {
   '/members': typeof MembersRoute
   '/notices': typeof NoticesRoute
   '/upazilas': typeof UpazilasRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/upazila/$slug': typeof UpazilaSlugRoute
 }
 export interface FileRouteTypes {
@@ -122,6 +155,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/alumni'
+    | '/auth'
     | '/committee'
     | '/contact'
     | '/events'
@@ -130,11 +164,14 @@ export interface FileRouteTypes {
     | '/members'
     | '/notices'
     | '/upazilas'
+    | '/dashboard'
+    | '/profile'
     | '/upazila/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/alumni'
+    | '/auth'
     | '/committee'
     | '/contact'
     | '/events'
@@ -143,11 +180,15 @@ export interface FileRouteTypes {
     | '/members'
     | '/notices'
     | '/upazilas'
+    | '/dashboard'
+    | '/profile'
     | '/upazila/$slug'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/alumni'
+    | '/auth'
     | '/committee'
     | '/contact'
     | '/events'
@@ -156,12 +197,16 @@ export interface FileRouteTypes {
     | '/members'
     | '/notices'
     | '/upazilas'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/profile'
     | '/upazila/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AlumniRoute: typeof AlumniRoute
+  AuthRoute: typeof AuthRoute
   CommitteeRoute: typeof CommitteeRoute
   ContactRoute: typeof ContactRoute
   EventsRoute: typeof EventsRoute
@@ -231,11 +276,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CommitteeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/alumni': {
       id: '/alumni'
       path: '/alumni'
       fullPath: '/alumni'
       preLoaderRoute: typeof AlumniRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -252,12 +311,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UpazilaSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AlumniRoute: AlumniRoute,
+  AuthRoute: AuthRoute,
   CommitteeRoute: CommitteeRoute,
   ContactRoute: ContactRoute,
   EventsRoute: EventsRoute,
