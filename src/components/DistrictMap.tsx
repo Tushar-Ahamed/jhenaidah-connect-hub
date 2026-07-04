@@ -9,7 +9,7 @@ export function DistrictMap() {
   const { data: counts = {} } = useUpazilaCounts();
   const { data: infos } = useUpazilaInfo();
   const { data: summary = {} } = useCommitteeSummary();
-  const info = (infos ?? []).find((i: any) => i.upazila === current.name) as { intro?: string | null } | undefined;
+  const info = (Array.isArray(infos) ? infos : []).find((i) => i.upazila === current.name);
   const s = summary[current.name] ?? {};
 
   return (
