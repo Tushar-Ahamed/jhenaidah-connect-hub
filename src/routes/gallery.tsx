@@ -4,7 +4,7 @@ import { PageShell } from "@/components/PageShell";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { GALLERY_CATEGORIES } from "@/lib/constants";
-import { galleryItems as demoItems } from "@/lib/data";
+import { galleryImages } from "@/lib/data";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
@@ -40,8 +40,8 @@ function GalleryPage() {
     })();
   }, [items]);
 
-  // fallback to demo items when DB empty
-  const source = (items?.length ? items : demoItems.map((d) => ({ id: d.id, title: d.title, category: d.category, image_url: d.src }))) as any[];
+  const demoItems = galleryImages.map((src, i) => ({ id: `demo-${i}`, title: "গ্যালারি", category: "নবীনবরণ", image_url: src }));
+  const source = (items?.length ? items : demoItems) as Array<{ id: string; title: string; category: string; image_url: string }>;
   const list = source.filter((g) => cat === "all" || g.category === cat);
 
   return (

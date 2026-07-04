@@ -11,6 +11,7 @@ const nav = [
   { to: "/", label: "হোম" },
   { to: "/upazilas", label: "উপজেলা" },
   { to: "/members", label: "সদস্য" },
+  { to: "/teachers", label: "শিক্ষক" },
   { to: "/alumni", label: "অ্যালামনাই" },
   { to: "/committee", label: "কমিটি" },
   { to: "/events", label: "ইভেন্ট" },
