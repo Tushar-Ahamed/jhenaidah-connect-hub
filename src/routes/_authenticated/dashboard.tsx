@@ -80,6 +80,9 @@ function Dashboard() {
               <AdminLink to="/admin/notices" label="নোটিশ পরিচালনা" />
               <AdminLink to="/admin/events" label="ইভেন্ট পরিচালনা" />
               <AdminLink to="/admin/gallery" label="গ্যালারি" />
+              <AdminLink to="/admin/committee" label="কমিটি" />
+              <AdminLink to="/admin/upazila-info" label="উপজেলা পরিচিতি" />
+              <AdminLink to="/admin/alumni" label="অ্যালামনাই (ম্যানুয়াল)" />
               {isDistrictAdmin && <AdminLink to="/admin/members" label="সদস্য ও রোল" />}
             </div>
           )}

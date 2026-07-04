@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
-import { members, departments, sessions, halls, upazilas } from "@/lib/data";
+import { UPAZILAS, MEMBER_TYPES } from "@/lib/constants";
+import { useProfiles } from "@/lib/queries";
 
 export const Route = createFileRoute("/members")({
   head: () => ({
@@ -20,17 +21,34 @@ function MembersPage() {
   const [session, setSession] = useState("");
   const [hall, setHall] = useState("");
   const [upazila, setUpazila] = useState("");
+  const [type, setType] = useState("");
+
+  const { data: members = [], isLoading } = useProfiles();
+
+  const departments = useMemo(
+    () => Array.from(new Set(members.map((m) => m.department).filter(Boolean) as string[])),
+    [members],
+  );
+  const sessions = useMemo(
+    () => Array.from(new Set(members.map((m) => m.session).filter(Boolean) as string[])).sort(),
+    [members],
+  );
+  const halls = useMemo(
+    () => Array.from(new Set(members.map((m) => m.hall).filter(Boolean) as string[])),
+    [members],
+  );
 
   const filtered = useMemo(() => {
     return members.filter((m) => {
-      if (q && !m.name.toLowerCase().includes(q.toLowerCase())) return false;
+      if (q && !(m.full_name ?? "").toLowerCase().includes(q.toLowerCase())) return false;
       if (dept && m.department !== dept) return false;
       if (session && m.session !== session) return false;
       if (hall && m.hall !== hall) return false;
       if (upazila && m.upazila !== upazila) return false;
+      if (type && m.member_type !== type) return false;
       return true;
     });
-  }, [q, dept, session, hall, upazila]);
+  }, [members, q, dept, session, hall, upazila, type]);
 
   return (
     <PageShell title="সদস্য ডিরেক্টরি" subtitle="নাম, বিভাগ, সেশন, হল বা উপজেলা দিয়ে সদস্য খুঁজুন।">
@@ -44,18 +62,17 @@ function MembersPage() {
             className="w-full rounded-lg border border-input bg-background py-3 pl-10 pr-3 outline-none focus:ring-2 focus:ring-ring"
           />
         </div>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <Select value={dept} onChange={setDept} label="বিভাগ" options={departments} />
-          <Select value={session} onChange={setSession} label="সেশন" options={sessions} />
-          <Select value={hall} onChange={setHall} label="হল" options={halls} />
-          <Select value={upazila} onChange={setUpazila} label="উপজেলা" options={upazilas.map((u) => u.name)} />
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          <Select value={type} onChange={setType} label="ধরন" options={MEMBER_TYPES.map((t) => ({ value: t.value, label: t.label }))} />
+          <Select value={dept} onChange={setDept} label="বিভাগ" options={departments.map((o) => ({ value: o, label: o }))} />
+          <Select value={session} onChange={setSession} label="সেশন" options={sessions.map((o) => ({ value: o, label: o }))} />
+          <Select value={hall} onChange={setHall} label="হল" options={halls.map((o) => ({ value: o, label: o }))} />
+          <Select value={upazila} onChange={setUpazila} label="উপজেলা" options={UPAZILAS.map((o) => ({ value: o, label: o }))} />
         </div>
         <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
           <span>মোট {filtered.length} জন সদস্য পাওয়া গেছে</span>
           <button
-            onClick={() => {
-              setQ(""); setDept(""); setSession(""); setHall(""); setUpazila("");
-            }}
+            onClick={() => { setQ(""); setDept(""); setSession(""); setHall(""); setUpazila(""); setType(""); }}
             className="font-semibold text-brand-red hover:underline"
           >
             ফিল্টার রিসেট
@@ -63,29 +80,35 @@ function MembersPage() {
         </div>
       </div>
 
+      {isLoading && <div className="text-center text-muted-foreground">লোড হচ্ছে...</div>}
+
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((m) => (
           <div key={m.id} className="card-elevated card-elevated-hover p-5">
             <div className="flex items-start gap-4">
               <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full gradient-banner text-lg font-bold text-white">
-                {m.name.charAt(0)}
+                {(m.full_name ?? "?").charAt(0)}
               </div>
               <div className="min-w-0">
-                <div className="truncate font-bold">{m.name}</div>
-                {m.position && <div className="text-xs font-semibold text-brand-red">{m.position}</div>}
+                <div className="truncate font-bold">{m.full_name}</div>
+                <div className="text-[10px] font-semibold uppercase text-brand-red">
+                  {MEMBER_TYPES.find((t) => t.value === m.member_type)?.label ?? "সদস্য"}
+                </div>
                 <div className="mt-1 text-xs text-muted-foreground">{m.department}</div>
               </div>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-              <Info label="সেশন" value={m.session} />
-              <Info label="হল" value={m.hall} />
-              <Info label="উপজেলা" value={m.upazila} />
+              {m.session && <Info label="সেশন" value={m.session} />}
+              {m.hall && <Info label="হল" value={m.hall} />}
+              {m.upazila && <Info label="উপজেলা" value={m.upazila} />}
+              {m.designation && <Info label="পদবি" value={m.designation} />}
+              {m.institution && <Info label="প্রতিষ্ঠান" value={m.institution} />}
             </div>
           </div>
         ))}
       </div>
 
-      {filtered.length === 0 && (
+      {!isLoading && filtered.length === 0 && (
         <div className="card-elevated p-10 text-center text-muted-foreground">
           এই ফিল্টারে কোনো সদস্য পাওয়া যায়নি।
         </div>
@@ -94,7 +117,7 @@ function MembersPage() {
   );
 }
 
-function Select({ value, onChange, label, options }: { value: string; onChange: (v: string) => void; label: string; options: string[] }) {
+function Select({ value, onChange, label, options }: { value: string; onChange: (v: string) => void; label: string; options: { value: string; label: string }[] }) {
   return (
     <select
       value={value}
@@ -103,7 +126,7 @@ function Select({ value, onChange, label, options }: { value: string; onChange: 
     >
       <option value="">সব {label}</option>
       {options.map((o) => (
-        <option key={o} value={o}>{o}</option>
+        <option key={o.value} value={o.value}>{o.label}</option>
       ))}
     </select>
   );

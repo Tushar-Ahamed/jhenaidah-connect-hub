@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { GraduationCap, Search } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
-import { alumni, upazilas } from "@/lib/data";
+import { UPAZILAS } from "@/lib/constants";
+import { useProfiles, useAlumniManual } from "@/lib/queries";
 
 export const Route = createFileRoute("/alumni")({
   head: () => ({
@@ -14,21 +15,56 @@ export const Route = createFileRoute("/alumni")({
   component: AlumniPage,
 });
 
+type AlumniCard = {
+  id: string;
+  name: string;
+  department?: string | null;
+  session?: string | null;
+  hall?: string | null;
+  upazila: string;
+  current?: string | null;
+};
+
 function AlumniPage() {
   const [q, setQ] = useState("");
   const [u, setU] = useState("");
-  const filtered = useMemo(() =>
-    alumni.filter((a) =>
-      (!q || a.name.includes(q) || a.current?.includes(q)) &&
-      (!u || a.upazila === u)
-    ), [q, u]);
+  const { data: profiles = [] } = useProfiles();
+  const { data: manual = [] } = useAlumniManual();
+
+  const list: AlumniCard[] = useMemo(() => {
+    const reg = profiles
+      .filter((p) => p.is_alumni || p.member_type === "alumni")
+      .map<AlumniCard>((p) => ({
+        id: "p-" + p.id,
+        name: p.full_name ?? "",
+        department: p.department,
+        session: p.session,
+        hall: p.hall,
+        upazila: p.upazila ?? "",
+        current: p.current_position,
+      }));
+    const man = manual.map<AlumniCard>((a) => ({
+      id: "m-" + a.id,
+      name: a.full_name,
+      department: a.department,
+      session: a.session,
+      hall: a.hall,
+      upazila: a.upazila,
+      current: a.current_position,
+    }));
+    return [...reg, ...man];
+  }, [profiles, manual]);
+
+  const filtered = list.filter((a) =>
+    (!q || a.name.includes(q) || (a.current ?? "").includes(q)) && (!u || a.upazila === u),
+  );
 
   return (
     <PageShell title="অ্যালামনাই নেটওয়ার্ক" subtitle="দেশ-বিদেশে কর্মরত আমাদের প্রাক্তন সদস্যবৃন্দ।">
       <div className="mb-8 grid gap-4 sm:grid-cols-3">
-        <Stat value="১,২০০+" label="মোট অ্যালামনাই" />
-        <Stat value="৩৫+" label="দেশে কর্মরত" />
-        <Stat value="৬টি" label="পেশাগত খাত" />
+        <Stat value={String(list.length)} label="মোট অ্যালামনাই" />
+        <Stat value={String(new Set(list.map((a) => a.upazila)).size)} label="উপজেলা" />
+        <Stat value={String(new Set(list.map((a) => a.department)).size)} label="বিভাগ" />
       </div>
 
       <div className="card-elevated mb-6 grid gap-3 p-5 sm:grid-cols-[1fr_auto]">
@@ -41,13 +77,10 @@ function AlumniPage() {
             className="w-full rounded-lg border border-input bg-background py-2.5 pl-10 pr-3 text-sm outline-none focus:ring-2 focus:ring-ring"
           />
         </div>
-        <select
-          value={u}
-          onChange={(e) => setU(e.target.value)}
-          className="rounded-lg border border-input bg-background p-2.5 text-sm outline-none focus:ring-2 focus:ring-ring"
-        >
+        <select value={u} onChange={(e) => setU(e.target.value)}
+          className="rounded-lg border border-input bg-background p-2.5 text-sm outline-none focus:ring-2 focus:ring-ring">
           <option value="">সব উপজেলা</option>
-          {upazilas.map((x) => <option key={x.slug} value={x.name}>{x.name}</option>)}
+          {UPAZILAS.map((x) => <option key={x} value={x}>{x}</option>)}
         </select>
       </div>
 
@@ -57,7 +90,7 @@ function AlumniPage() {
             <div className="flex items-center gap-2 text-xs">
               <GraduationCap className="h-4 w-4 text-brand-red" />
               <span className="font-semibold text-brand-red">অ্যালামনাই</span>
-              <span className="text-muted-foreground">• {a.session}</span>
+              {a.session && <span className="text-muted-foreground">• {a.session}</span>}
             </div>
             <div className="mt-3 flex items-start gap-4">
               <div className="grid h-16 w-16 shrink-0 place-items-center rounded-full gradient-banner text-xl font-bold text-white">
@@ -65,8 +98,8 @@ function AlumniPage() {
               </div>
               <div className="min-w-0">
                 <div className="font-bold">{a.name}</div>
-                <div className="text-xs text-muted-foreground">{a.department}</div>
-                <div className="text-xs text-muted-foreground">{a.hall}</div>
+                {a.department && <div className="text-xs text-muted-foreground">{a.department}</div>}
+                {a.hall && <div className="text-xs text-muted-foreground">{a.hall}</div>}
               </div>
             </div>
             {a.current && (
@@ -79,6 +112,9 @@ function AlumniPage() {
           </div>
         ))}
       </div>
+      {filtered.length === 0 && (
+        <div className="card-elevated p-10 text-center text-muted-foreground">কোনো অ্যালামনাই পাওয়া যায়নি।</div>
+      )}
     </PageShell>
   );
 }
