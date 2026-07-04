@@ -14,6 +14,90 @@ export type Database = {
   }
   public: {
     Tables: {
+      alumni_manual: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          created_by: string | null
+          current_position: string | null
+          department: string | null
+          full_name: string
+          hall: string | null
+          id: string
+          session: string | null
+          upazila: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          current_position?: string | null
+          department?: string | null
+          full_name: string
+          hall?: string | null
+          id?: string
+          session?: string | null
+          upazila: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          current_position?: string | null
+          department?: string | null
+          full_name?: string
+          hall?: string | null
+          id?: string
+          session?: string | null
+          upazila?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      committee_positions: {
+        Row: {
+          created_at: string
+          holder_name: string | null
+          holder_user_id: string | null
+          id: string
+          level: string
+          order_index: number
+          position_title: string
+          term_end: string | null
+          term_start: string | null
+          upazila: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          holder_name?: string | null
+          holder_user_id?: string | null
+          id?: string
+          level: string
+          order_index?: number
+          position_title: string
+          term_end?: string | null
+          term_start?: string | null
+          upazila?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          holder_name?: string | null
+          holder_user_id?: string | null
+          id?: string
+          level?: string
+          order_index?: number
+          position_title?: string
+          term_end?: string | null
+          term_start?: string | null
+          upazila?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       events: {
         Row: {
           created_at: string
@@ -125,10 +209,13 @@ export type Database = {
           created_at: string
           current_position: string | null
           department: string | null
+          designation: string | null
           full_name: string
           hall: string | null
           id: string
+          institution: string | null
           is_alumni: boolean
+          member_type: string
           phone: string | null
           real_email: string | null
           reg_no: string | null
@@ -142,10 +229,13 @@ export type Database = {
           created_at?: string
           current_position?: string | null
           department?: string | null
+          designation?: string | null
           full_name?: string
           hall?: string | null
           id: string
+          institution?: string | null
           is_alumni?: boolean
+          member_type?: string
           phone?: string | null
           real_email?: string | null
           reg_no?: string | null
@@ -159,16 +249,43 @@ export type Database = {
           created_at?: string
           current_position?: string | null
           department?: string | null
+          designation?: string | null
           full_name?: string
           hall?: string | null
           id?: string
+          institution?: string | null
           is_alumni?: boolean
+          member_type?: string
           phone?: string | null
           real_email?: string | null
           reg_no?: string | null
           roll_no?: string | null
           session?: string | null
           upazila?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      upazila_info: {
+        Row: {
+          cover_url: string | null
+          created_at: string
+          intro: string | null
+          upazila: string
+          updated_at: string
+        }
+        Insert: {
+          cover_url?: string | null
+          created_at?: string
+          intro?: string | null
+          upazila: string
+          updated_at?: string
+        }
+        Update: {
+          cover_url?: string | null
+          created_at?: string
+          intro?: string | null
+          upazila?: string
           updated_at?: string
         }
         Relationships: []
