@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
+import { AdminGuard } from "@/components/AdminGuard";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -9,7 +10,7 @@ import { useRoles } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/_authenticated/admin/upazila-info")({
   head: () => ({ meta: [{ title: "উপজেলা পরিচিতি পরিচালনা" }] }),
-  component: AdminUpazilaInfo,
+  component: () => <AdminGuard><AdminUpazilaInfo /></AdminGuard>,
 });
 
 function AdminUpazilaInfo() {

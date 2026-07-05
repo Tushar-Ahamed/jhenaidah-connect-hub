@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
+import { AdminGuard } from "@/components/AdminGuard";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -10,7 +11,7 @@ import { Trash2, Plus } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/alumni")({
   head: () => ({ meta: [{ title: "অ্যালামনাই পরিচালনা" }] }),
-  component: AdminAlumni,
+  component: () => <AdminGuard><AdminAlumni /></AdminGuard>,
 });
 
 function AdminAlumni() {
