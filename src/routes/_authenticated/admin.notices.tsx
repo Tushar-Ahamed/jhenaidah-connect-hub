@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
+import { AdminGuard } from "@/components/AdminGuard";
 import { supabase } from "@/integrations/supabase/client";
 import { useRoles } from "@/hooks/use-auth";
 import { UPAZILAS } from "@/lib/constants";
@@ -10,7 +11,7 @@ import { Pencil, Trash2, Plus } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/notices")({
   head: () => ({ meta: [{ title: "নোটিশ পরিচালনা" }] }),
-  component: AdminNotices,
+  component: () => <AdminGuard><AdminNotices /></AdminGuard>,
 });
 
 function AdminNotices() {
