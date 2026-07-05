@@ -1,15 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
+import { AdminGuard } from "@/components/AdminGuard";
 import { supabase } from "@/integrations/supabase/client";
 import { UPAZILAS } from "@/lib/constants";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
-import { ShieldCheck, Shield, User as UserIcon } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/members")({
   head: () => ({ meta: [{ title: "সদস্য ও রোল পরিচালনা" }] }),
-  component: AdminMembers,
+  component: () => <AdminGuard districtOnly><AdminMembers /></AdminGuard>,
 });
 
 function AdminMembers() {

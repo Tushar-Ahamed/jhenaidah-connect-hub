@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
+import { AdminGuard } from "@/components/AdminGuard";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth, useRoles } from "@/hooks/use-auth";
 import { GALLERY_CATEGORIES, UPAZILAS } from "@/lib/constants";
@@ -10,7 +11,7 @@ import { Trash2, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/gallery")({
   head: () => ({ meta: [{ title: "গ্যালারি পরিচালনা" }] }),
-  component: AdminGallery,
+  component: () => <AdminGuard><AdminGallery /></AdminGuard>,
 });
 
 function AdminGallery() {
