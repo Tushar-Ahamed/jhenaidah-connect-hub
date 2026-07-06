@@ -35,8 +35,6 @@ function AuthPage() {
   const [rUpazila, setRUpazila] = useState<string>(UPAZILAS[0]);
   const [rPhone, setRPhone] = useState("");
   const [rType, setRType] = useState<"student" | "alumni" | "teacher">("student");
-  const [rInstitution, setRInstitution] = useState("");
-  const [rDesignation, setRDesignation] = useState("");
   const [rCurrent, setRCurrent] = useState("");
 
   async function handleLogin(e: React.FormEvent) {
@@ -74,8 +72,8 @@ function AuthPage() {
             phone: rPhone,
             real_email: rEmail,
             member_type: rType,
-            institution: rType === "teacher" ? rInstitution : null,
-            designation: rType === "teacher" ? rDesignation : null,
+            institution: null,
+            designation: null,
             is_alumni: rType === "alumni",
             current_position: rType === "alumni" ? rCurrent : null,
           },
@@ -166,12 +164,6 @@ function AuthPage() {
                 </div>
               </div>
               <Field label="মোবাইল" value={rPhone} onChange={setRPhone} required={false} />
-              {rType === "teacher" && (
-                <div className="grid grid-cols-2 gap-3">
-                  <Field label="প্রতিষ্ঠান" value={rInstitution} onChange={setRInstitution} />
-                  <Field label="পদবি" value={rDesignation} onChange={setRDesignation} />
-                </div>
-              )}
               {rType === "alumni" && (
                 <Field label="বর্তমান পদ / প্রতিষ্ঠান" value={rCurrent} onChange={setRCurrent} required={false} />
               )}
