@@ -164,12 +164,6 @@ function AuthPage() {
                 </div>
               </div>
               <Field label="মোবাইল" value={rPhone} onChange={setRPhone} required={false} />
-              {rType === "teacher" && (
-                <div className="grid grid-cols-2 gap-3">
-                  <Field label="প্রতিষ্ঠান" value={rInstitution} onChange={setRInstitution} />
-                  <Field label="পদবি" value={rDesignation} onChange={setRDesignation} />
-                </div>
-              )}
               {rType === "alumni" && (
                 <Field label="বর্তমান পদ / প্রতিষ্ঠান" value={rCurrent} onChange={setRCurrent} required={false} />
               )}
