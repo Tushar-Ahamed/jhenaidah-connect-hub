@@ -35,8 +35,6 @@ function AuthPage() {
   const [rUpazila, setRUpazila] = useState<string>(UPAZILAS[0]);
   const [rPhone, setRPhone] = useState("");
   const [rType, setRType] = useState<"student" | "alumni" | "teacher">("student");
-  const [rInstitution, setRInstitution] = useState("");
-  const [rDesignation, setRDesignation] = useState("");
   const [rCurrent, setRCurrent] = useState("");
 
   async function handleLogin(e: React.FormEvent) {
