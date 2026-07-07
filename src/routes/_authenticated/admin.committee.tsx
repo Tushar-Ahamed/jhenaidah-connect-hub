@@ -19,7 +19,7 @@ function AdminCommittee() {
   const { user } = useAuth();
   const { data: profile } = useProfile();
   const { data: roles } = useRoles();
-  const isDA = roles?.some((r) => r.role === "district_admin");
+  const isDA = roles?.some((r) => r.role === "super_admin");
   const upzAdminList = (roles ?? []).filter((r) => r.role === "upazila_admin").map((r) => r.upazila!).filter(Boolean);
 
   const [level, setLevel] = useState<"district" | "upazila">(isDA ? "district" : "upazila");
