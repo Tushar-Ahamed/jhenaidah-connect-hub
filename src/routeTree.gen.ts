@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UpazilasRouteImport } from './routes/upazilas'
 import { Route as TeachersRouteImport } from './routes/teachers'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as NoticesRouteImport } from './routes/notices'
 import { Route as MembersRouteImport } from './routes/members'
 import { Route as LoginRouteImport } from './routes/login'
@@ -23,15 +24,19 @@ import { Route as AlumniRouteImport } from './routes/alumni'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UpazilaSlugRouteImport } from './routes/upazila.$slug'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedAdminUpazilaInfoRouteImport } from './routes/_authenticated/admin.upazila-info'
+import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminNoticesRouteImport } from './routes/_authenticated/admin.notices'
 import { Route as AuthenticatedAdminMembersRouteImport } from './routes/_authenticated/admin.members'
 import { Route as AuthenticatedAdminGalleryRouteImport } from './routes/_authenticated/admin.gallery'
 import { Route as AuthenticatedAdminEventsRouteImport } from './routes/_authenticated/admin.events'
 import { Route as AuthenticatedAdminCommitteeRouteImport } from './routes/_authenticated/admin.committee'
+import { Route as AuthenticatedAdminAuditLogsRouteImport } from './routes/_authenticated/admin.audit-logs'
 import { Route as AuthenticatedAdminAlumniRouteImport } from './routes/_authenticated/admin.alumni'
+import { Route as AuthenticatedAdminActivityLogsRouteImport } from './routes/_authenticated/admin.activity-logs'
 
 const UpazilasRoute = UpazilasRouteImport.update({
   id: '/upazilas',
@@ -41,6 +46,11 @@ const UpazilasRoute = UpazilasRouteImport.update({
 const TeachersRoute = TeachersRouteImport.update({
   id: '/teachers',
   path: '/teachers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NoticesRoute = NoticesRouteImport.update({
@@ -102,6 +112,11 @@ const UpazilaSlugRoute = UpazilaSlugRouteImport.update({
   path: '/upazila/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -116,6 +131,12 @@ const AuthenticatedAdminUpazilaInfoRoute =
   AuthenticatedAdminUpazilaInfoRouteImport.update({
     id: '/admin/upazila-info',
     path: '/admin/upazila-info',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminSettingsRoute =
+  AuthenticatedAdminSettingsRouteImport.update({
+    id: '/admin/settings',
+    path: '/admin/settings',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminNoticesRoute =
@@ -148,10 +169,22 @@ const AuthenticatedAdminCommitteeRoute =
     path: '/admin/committee',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminAuditLogsRoute =
+  AuthenticatedAdminAuditLogsRouteImport.update({
+    id: '/admin/audit-logs',
+    path: '/admin/audit-logs',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminAlumniRoute =
   AuthenticatedAdminAlumniRouteImport.update({
     id: '/admin/alumni',
     path: '/admin/alumni',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminActivityLogsRoute =
+  AuthenticatedAdminActivityLogsRouteImport.update({
+    id: '/admin/activity-logs',
+    path: '/admin/activity-logs',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
@@ -166,17 +199,22 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/members': typeof MembersRoute
   '/notices': typeof NoticesRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/teachers': typeof TeachersRoute
   '/upazilas': typeof UpazilasRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/admin/login': typeof AdminLoginRoute
   '/upazila/$slug': typeof UpazilaSlugRoute
+  '/admin/activity-logs': typeof AuthenticatedAdminActivityLogsRoute
   '/admin/alumni': typeof AuthenticatedAdminAlumniRoute
+  '/admin/audit-logs': typeof AuthenticatedAdminAuditLogsRoute
   '/admin/committee': typeof AuthenticatedAdminCommitteeRoute
   '/admin/events': typeof AuthenticatedAdminEventsRoute
   '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
   '/admin/members': typeof AuthenticatedAdminMembersRoute
   '/admin/notices': typeof AuthenticatedAdminNoticesRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/upazila-info': typeof AuthenticatedAdminUpazilaInfoRoute
 }
 export interface FileRoutesByTo {
@@ -190,17 +228,22 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/members': typeof MembersRoute
   '/notices': typeof NoticesRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/teachers': typeof TeachersRoute
   '/upazilas': typeof UpazilasRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/admin/login': typeof AdminLoginRoute
   '/upazila/$slug': typeof UpazilaSlugRoute
+  '/admin/activity-logs': typeof AuthenticatedAdminActivityLogsRoute
   '/admin/alumni': typeof AuthenticatedAdminAlumniRoute
+  '/admin/audit-logs': typeof AuthenticatedAdminAuditLogsRoute
   '/admin/committee': typeof AuthenticatedAdminCommitteeRoute
   '/admin/events': typeof AuthenticatedAdminEventsRoute
   '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
   '/admin/members': typeof AuthenticatedAdminMembersRoute
   '/admin/notices': typeof AuthenticatedAdminNoticesRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/upazila-info': typeof AuthenticatedAdminUpazilaInfoRoute
 }
 export interface FileRoutesById {
@@ -216,17 +259,22 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/members': typeof MembersRoute
   '/notices': typeof NoticesRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/teachers': typeof TeachersRoute
   '/upazilas': typeof UpazilasRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/admin/login': typeof AdminLoginRoute
   '/upazila/$slug': typeof UpazilaSlugRoute
+  '/_authenticated/admin/activity-logs': typeof AuthenticatedAdminActivityLogsRoute
   '/_authenticated/admin/alumni': typeof AuthenticatedAdminAlumniRoute
+  '/_authenticated/admin/audit-logs': typeof AuthenticatedAdminAuditLogsRoute
   '/_authenticated/admin/committee': typeof AuthenticatedAdminCommitteeRoute
   '/_authenticated/admin/events': typeof AuthenticatedAdminEventsRoute
   '/_authenticated/admin/gallery': typeof AuthenticatedAdminGalleryRoute
   '/_authenticated/admin/members': typeof AuthenticatedAdminMembersRoute
   '/_authenticated/admin/notices': typeof AuthenticatedAdminNoticesRoute
+  '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/upazila-info': typeof AuthenticatedAdminUpazilaInfoRoute
 }
 export interface FileRouteTypes {
@@ -242,17 +290,22 @@ export interface FileRouteTypes {
     | '/login'
     | '/members'
     | '/notices'
+    | '/reset-password'
     | '/teachers'
     | '/upazilas'
     | '/dashboard'
     | '/profile'
+    | '/admin/login'
     | '/upazila/$slug'
+    | '/admin/activity-logs'
     | '/admin/alumni'
+    | '/admin/audit-logs'
     | '/admin/committee'
     | '/admin/events'
     | '/admin/gallery'
     | '/admin/members'
     | '/admin/notices'
+    | '/admin/settings'
     | '/admin/upazila-info'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -266,17 +319,22 @@ export interface FileRouteTypes {
     | '/login'
     | '/members'
     | '/notices'
+    | '/reset-password'
     | '/teachers'
     | '/upazilas'
     | '/dashboard'
     | '/profile'
+    | '/admin/login'
     | '/upazila/$slug'
+    | '/admin/activity-logs'
     | '/admin/alumni'
+    | '/admin/audit-logs'
     | '/admin/committee'
     | '/admin/events'
     | '/admin/gallery'
     | '/admin/members'
     | '/admin/notices'
+    | '/admin/settings'
     | '/admin/upazila-info'
   id:
     | '__root__'
@@ -291,17 +349,22 @@ export interface FileRouteTypes {
     | '/login'
     | '/members'
     | '/notices'
+    | '/reset-password'
     | '/teachers'
     | '/upazilas'
     | '/_authenticated/dashboard'
     | '/_authenticated/profile'
+    | '/admin/login'
     | '/upazila/$slug'
+    | '/_authenticated/admin/activity-logs'
     | '/_authenticated/admin/alumni'
+    | '/_authenticated/admin/audit-logs'
     | '/_authenticated/admin/committee'
     | '/_authenticated/admin/events'
     | '/_authenticated/admin/gallery'
     | '/_authenticated/admin/members'
     | '/_authenticated/admin/notices'
+    | '/_authenticated/admin/settings'
     | '/_authenticated/admin/upazila-info'
   fileRoutesById: FileRoutesById
 }
@@ -317,8 +380,10 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   MembersRoute: typeof MembersRoute
   NoticesRoute: typeof NoticesRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   TeachersRoute: typeof TeachersRoute
   UpazilasRoute: typeof UpazilasRoute
+  AdminLoginRoute: typeof AdminLoginRoute
   UpazilaSlugRoute: typeof UpazilaSlugRoute
 }
 
@@ -336,6 +401,13 @@ declare module '@tanstack/react-router' {
       path: '/teachers'
       fullPath: '/teachers'
       preLoaderRoute: typeof TeachersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/notices': {
@@ -422,6 +494,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UpazilaSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/profile': {
       id: '/_authenticated/profile'
       path: '/profile'
@@ -441,6 +520,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/upazila-info'
       fullPath: '/admin/upazila-info'
       preLoaderRoute: typeof AuthenticatedAdminUpazilaInfoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/settings': {
+      id: '/_authenticated/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/notices': {
@@ -478,11 +564,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCommitteeRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/audit-logs': {
+      id: '/_authenticated/admin/audit-logs'
+      path: '/admin/audit-logs'
+      fullPath: '/admin/audit-logs'
+      preLoaderRoute: typeof AuthenticatedAdminAuditLogsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/alumni': {
       id: '/_authenticated/admin/alumni'
       path: '/admin/alumni'
       fullPath: '/admin/alumni'
       preLoaderRoute: typeof AuthenticatedAdminAlumniRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/activity-logs': {
+      id: '/_authenticated/admin/activity-logs'
+      path: '/admin/activity-logs'
+      fullPath: '/admin/activity-logs'
+      preLoaderRoute: typeof AuthenticatedAdminActivityLogsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
@@ -491,24 +591,30 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedAdminActivityLogsRoute: typeof AuthenticatedAdminActivityLogsRoute
   AuthenticatedAdminAlumniRoute: typeof AuthenticatedAdminAlumniRoute
+  AuthenticatedAdminAuditLogsRoute: typeof AuthenticatedAdminAuditLogsRoute
   AuthenticatedAdminCommitteeRoute: typeof AuthenticatedAdminCommitteeRoute
   AuthenticatedAdminEventsRoute: typeof AuthenticatedAdminEventsRoute
   AuthenticatedAdminGalleryRoute: typeof AuthenticatedAdminGalleryRoute
   AuthenticatedAdminMembersRoute: typeof AuthenticatedAdminMembersRoute
   AuthenticatedAdminNoticesRoute: typeof AuthenticatedAdminNoticesRoute
+  AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminUpazilaInfoRoute: typeof AuthenticatedAdminUpazilaInfoRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedAdminActivityLogsRoute: AuthenticatedAdminActivityLogsRoute,
   AuthenticatedAdminAlumniRoute: AuthenticatedAdminAlumniRoute,
+  AuthenticatedAdminAuditLogsRoute: AuthenticatedAdminAuditLogsRoute,
   AuthenticatedAdminCommitteeRoute: AuthenticatedAdminCommitteeRoute,
   AuthenticatedAdminEventsRoute: AuthenticatedAdminEventsRoute,
   AuthenticatedAdminGalleryRoute: AuthenticatedAdminGalleryRoute,
   AuthenticatedAdminMembersRoute: AuthenticatedAdminMembersRoute,
   AuthenticatedAdminNoticesRoute: AuthenticatedAdminNoticesRoute,
+  AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
   AuthenticatedAdminUpazilaInfoRoute: AuthenticatedAdminUpazilaInfoRoute,
 }
 
@@ -527,8 +633,10 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   MembersRoute: MembersRoute,
   NoticesRoute: NoticesRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   TeachersRoute: TeachersRoute,
   UpazilasRoute: UpazilasRoute,
+  AdminLoginRoute: AdminLoginRoute,
   UpazilaSlugRoute: UpazilaSlugRoute,
 }
 export const routeTree = rootRouteImport

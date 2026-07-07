@@ -27,7 +27,7 @@ export async function logActivity(
       action,
       entity_type: entity_type ?? null,
       entity_id: entity_id ?? null,
-      metadata: rest,
+      metadata: rest as never,
     });
   } catch {
     // non-fatal
