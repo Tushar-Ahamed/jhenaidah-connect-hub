@@ -6,10 +6,10 @@ import type { ReactNode } from "react";
 type Props = {
   children: ReactNode;
   /** If true, only district_admin passes. Otherwise any admin (district or upazila) passes. */
-  districtOnly?: boolean;
+  superOnly?: boolean;
 };
 
-export function AdminGuard({ children, districtOnly = false }: Props) {
+export function AdminGuard({ children, superOnly = false }: Props) {
   const { data: roles, isLoading } = useRoles();
 
   if (isLoading) {
@@ -20,9 +20,9 @@ export function AdminGuard({ children, districtOnly = false }: Props) {
     );
   }
 
-  const isDA = roles?.some((r) => r.role === "district_admin");
+  const isDA = roles?.some((r) => r.role === "super_admin");
   const isUA = roles?.some((r) => r.role === "upazila_admin");
-  const ok = districtOnly ? isDA : isDA || isUA;
+  const ok = superOnly ? isDA : isDA || isUA;
 
   if (!ok) {
     return (
@@ -31,7 +31,7 @@ export function AdminGuard({ children, districtOnly = false }: Props) {
           <ShieldAlert className="mx-auto h-10 w-10 text-brand-red" />
           <h2 className="mt-4 text-xl font-bold">অ্যাক্সেস নেই</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            এই পেজটি শুধু {districtOnly ? "জেলা অ্যাডমিন" : "অ্যাডমিন"}দের জন্য।
+            এই পেজটি শুধু {superOnly ? "জেলা অ্যাডমিন" : "অ্যাডমিন"}দের জন্য।
             পদ পেতে হলে জেলা অ্যাডমিনের সাথে যোগাযোগ করুন।
           </p>
           <Link to="/dashboard" className="mt-5 inline-block rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">

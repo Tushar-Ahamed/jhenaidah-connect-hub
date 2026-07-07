@@ -16,7 +16,7 @@ export const Route = createFileRoute("/_authenticated/admin/upazila-info")({
 function AdminUpazilaInfo() {
   const qc = useQueryClient();
   const { data: roles } = useRoles();
-  const isDA = roles?.some((r) => r.role === "district_admin");
+  const isDA = roles?.some((r) => r.role === "super_admin");
   const upzList = (roles ?? []).filter((r) => r.role === "upazila_admin").map((r) => r.upazila!).filter(Boolean);
   const options = isDA ? [...UPAZILAS] : upzList;
 

@@ -10,10 +10,10 @@ import { ShieldCheck, UserPlus, X } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/members")({
   head: () => ({ meta: [{ title: "সদস্য ও রোল পরিচালনা" }] }),
-  component: () => <AdminGuard districtOnly><AdminMembers /></AdminGuard>,
+  component: () => <AdminGuard superOnly><AdminMembers /></AdminGuard>,
 });
 
-type RoleKind = "district_admin" | "upazila_admin";
+type RoleKind = "super_admin" | "upazila_admin";
 
 function AdminMembers() {
   const qc = useQueryClient();
@@ -93,7 +93,7 @@ function AdminMembers() {
   }
 
   const roleLabel = (r: RoleKind, u?: string) =>
-    r === "district_admin" ? "জেলা অ্যাডমিন" : `উপজেলা অ্যাডমিন — ${u ?? ""}`;
+    r === "super_admin" ? "জেলা অ্যাডমিন" : `উপজেলা অ্যাডমিন — ${u ?? ""}`;
 
   return (
     <PageShell title="সদস্য ও রোল পরিচালনা" subtitle="একজন রেজিস্টার্ড সদস্য বেছে নিন, উপযুক্ত রোল ও উপজেলা সিলেক্ট করুন, তারপর কনফার্ম করুন।">
@@ -135,7 +135,7 @@ function AdminMembers() {
                 <div className="mt-1 flex flex-wrap gap-1">
                   {rolesFor(picked.id).map((x: any, i: number) => (
                     <span key={i} className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-semibold">
-                      {x.role === "district_admin" ? "জেলা অ্যাডমিন" : x.role === "upazila_admin" ? `উপজেলা: ${x.upazila}` : "সদস্য"}
+                      {x.role === "super_admin" ? "জেলা অ্যাডমিন" : x.role === "upazila_admin" ? `উপজেলা: ${x.upazila}` : "সদস্য"}
                     </span>
                   ))}
                 </div>
@@ -152,7 +152,7 @@ function AdminMembers() {
             <label className="mb-1 block text-xs font-semibold">২. রোল</label>
             <select value={roleKind} onChange={(e) => setRoleKind(e.target.value as RoleKind)} className="w-full rounded-lg border border-input bg-background p-2.5 text-sm">
               <option value="upazila_admin">উপজেলা অ্যাডমিন</option>
-              <option value="district_admin">জেলা অ্যাডমিন</option>
+              <option value="super_admin">জেলা অ্যাডমিন</option>
             </select>
           </div>
           {roleKind === "upazila_admin" && (
@@ -195,7 +195,7 @@ function AdminMembers() {
                         title="ক্লিক করে সরান"
                       >
                         <ShieldCheck className="h-3 w-3" />
-                        {x.role === "district_admin" ? "জেলা অ্যাডমিন" : `উপজেলা: ${x.upazila}`}
+                        {x.role === "super_admin" ? "জেলা অ্যাডমিন" : `উপজেলা: ${x.upazila}`}
                         <X className="h-3 w-3" />
                       </button>
                     ))}

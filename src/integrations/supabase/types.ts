@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_logs: {
+        Row: {
+          action: string
+          created_at: string
+          entity_id: string | null
+          entity_type: string | null
+          id: string
+          metadata: Json
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          metadata?: Json
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          metadata?: Json
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       alumni_manual: {
         Row: {
           avatar_url: string | null
@@ -53,6 +83,42 @@ export type Database = {
           session?: string | null
           upazila?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      audit_logs: {
+        Row: {
+          action: string
+          actor_email: string | null
+          actor_id: string | null
+          after_data: Json | null
+          before_data: Json | null
+          created_at: string
+          id: string
+          target_id: string | null
+          target_type: string | null
+        }
+        Insert: {
+          action: string
+          actor_email?: string | null
+          actor_id?: string | null
+          after_data?: Json | null
+          before_data?: Json | null
+          created_at?: string
+          id?: string
+          target_id?: string | null
+          target_type?: string | null
+        }
+        Update: {
+          action?: string
+          actor_email?: string | null
+          actor_id?: string | null
+          after_data?: Json | null
+          before_data?: Json | null
+          created_at?: string
+          id?: string
+          target_id?: string | null
+          target_type?: string | null
         }
         Relationships: []
       }
@@ -203,6 +269,39 @@ export type Database = {
         }
         Relationships: []
       }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          kind: string
+          link: string | null
+          read_at: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          link?: string | null
+          read_at?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          link?: string | null
+          read_at?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -221,6 +320,7 @@ export type Database = {
           reg_no: string | null
           roll_no: string | null
           session: string | null
+          status: string
           upazila: string | null
           updated_at: string
         }
@@ -241,6 +341,7 @@ export type Database = {
           reg_no?: string | null
           roll_no?: string | null
           session?: string | null
+          status?: string
           upazila?: string | null
           updated_at?: string
         }
@@ -261,8 +362,30 @@ export type Database = {
           reg_no?: string | null
           roll_no?: string | null
           session?: string | null
+          status?: string
           upazila?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      system_settings: {
+        Row: {
+          key: string
+          updated_at: string
+          updated_by: string | null
+          value: Json
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          updated_by?: string | null
+          value?: Json
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          updated_by?: string | null
+          value?: Json
         }
         Relationships: []
       }
@@ -326,13 +449,19 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_any_admin: { Args: { _user_id: string }; Returns: boolean }
       is_upazila_admin_for: {
         Args: { _upazila: string; _user_id: string }
         Returns: boolean
       }
     }
     Enums: {
-      app_role: "district_admin" | "upazila_admin" | "member"
+      app_role:
+        | "super_admin"
+        | "upazila_admin"
+        | "committee_admin"
+        | "member"
+        | "visitor"
       content_level: "district" | "upazila"
     }
     CompositeTypes: {
@@ -461,7 +590,13 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["district_admin", "upazila_admin", "member"],
+      app_role: [
+        "super_admin",
+        "upazila_admin",
+        "committee_admin",
+        "member",
+        "visitor",
+      ],
       content_level: ["district", "upazila"],
     },
   },

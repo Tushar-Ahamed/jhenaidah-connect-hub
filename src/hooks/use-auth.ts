@@ -25,7 +25,7 @@ export function useAuth() {
   return { session, user, loading };
 }
 
-export type Role = "district_admin" | "upazila_admin" | "member";
+export type Role = "super_admin" | "upazila_admin" | "member";
 
 export function useRoles() {
   const { user } = useAuth();

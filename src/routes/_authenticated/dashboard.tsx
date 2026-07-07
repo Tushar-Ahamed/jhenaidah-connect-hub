@@ -18,7 +18,7 @@ function Dashboard() {
   const qc = useQueryClient();
   const nav = useNavigate();
 
-  const isDistrictAdmin = roles?.some((r) => r.role === "district_admin");
+  const isDistrictAdmin = roles?.some((r) => r.role === "super_admin");
   const isUpazilaAdmin = roles?.some((r) => r.role === "upazila_admin");
   const isAdmin = isDistrictAdmin || isUpazilaAdmin;
 
@@ -71,7 +71,7 @@ function Dashboard() {
           <div className="flex flex-wrap gap-2">
             {roles?.length ? roles.map((r, i) => (
               <span key={i} className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold">
-                {r.role === "district_admin" ? "জেলা অ্যাডমিন" : r.role === "upazila_admin" ? `উপজেলা অ্যাডমিন — ${r.upazila}` : "সাধারণ সদস্য"}
+                {r.role === "super_admin" ? "জেলা অ্যাডমিন" : r.role === "upazila_admin" ? `উপজেলা অ্যাডমিন — ${r.upazila}` : "সাধারণ সদস্য"}
               </span>
             )) : <span className="text-sm text-muted-foreground">সাধারণ সদস্য</span>}
           </div>

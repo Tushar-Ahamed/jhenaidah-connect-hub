@@ -17,7 +17,7 @@ export const Route = createFileRoute("/_authenticated/admin/notices")({
 function AdminNotices() {
   const qc = useQueryClient();
   const { data: roles } = useRoles();
-  const isDistrict = roles?.some((r) => r.role === "district_admin");
+  const isDistrict = roles?.some((r) => r.role === "super_admin");
   const upazilaScope = roles?.find((r) => r.role === "upazila_admin")?.upazila;
 
   const { data: notices } = useQuery({
